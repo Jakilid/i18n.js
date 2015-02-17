@@ -1,0 +1,64 @@
+<html>
+<head>
+	<style>
+		body { font-family:arial; }
+		#image {float: left; padding-right:10px;}
+	</style>
+	<title>i18n.js usage example</title>
+	<meta charset="utf-8" />
+</head>
+
+<body>
+
+<div>
+<h1 id="header">This is a test header</h1>
+<img id="image" src="http://placehold.it/50x50" />
+<p id="text">i18n.js is a flexible internationalization library for JavaScript.</p>
+</div>
+
+<br>
+
+<div>
+	<p id="numbers" >Number test:1234567890</p>
+	<p id="date" >Date test:2015-1-1</p>
+	<p id="locale" >Current locale:en-US</p>
+</div>
+<button id="fa">فارسی</button> 
+<button id="en">English</button>
+<button id="fr">French</button>
+
+<!-- i18n.js doesn't require jquery but included for simplicity -->
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="../i18n-min.js"></script>
+<script>
+	var locale = new i18n( {localePrefix:'locale/',	//where locales are stored
+						callBack: translateUi,		//will be called after translation
+						//"locale": "fa-IR"			//imediately translate to this locale
+						//baseLocale: "en-US"		//base locale for translations
+						} );
+	$('#fa').click(function(){
+		//change locale
+		locale.changeTranslation('fa-IR');
+	});
+	$('#en').click(function(){
+		locale.changeTranslation('en-US');
+	});
+	$('#fr').click(function(){
+		locale.changeTranslation('fr-FR');
+	});
+	
+	function translateUi()
+	{
+		console.log('translation callback');
+		$('title').text(locale.tr('i18n.js usage example'));
+		$('#header').text(locale.tr('This is a test header'));
+		$('#text').text(locale.tr('i18n.js is a flexible internationalization library for JavaScript.'));
+		$('#numbers').text(locale.tr('Number test:', 'customContext') + locale.toLocalNumber(1234567890) );
+		$('#date').text(locale.tr('Date test:', 'customContext') + locale.toLocalDateStr( new Date()) );
+		$('#locale').text(locale.tr('Current locale:', 'customContext') + locale.currentLanguage() );
+	}
+</script>
+
+
+</body>
+</html>

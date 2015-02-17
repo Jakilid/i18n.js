@@ -1,0 +1,11 @@
+/*
+	locale styles: load fonts, change directions, etc.
+*/
+body {
+	font-family: tahoma;
+}
+#image {
+	float: right;
+	padding-right:inherit;
+	padding-left:10px;
+}
